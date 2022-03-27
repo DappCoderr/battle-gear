@@ -1,17 +1,39 @@
-async function deployContract() {
-  const BattleGearNFT = await ethers.getContractFactory("BattleGear")
-  const BattleGearContract = await BattleGearNFT.deploy()
-  await BattleGearContract.deployed()
-  
-  const txHash = BattleGearContract.deployTransaction.hash
-  const txReceipt = await ethers.provider.waitForTransaction(txHash)
-  const contractAddress = txReceipt.contractAddress
-  console.log("Contract deployed to address:", contractAddress)
- }
- 
- deployContract()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
+const main = async () => {
+  const nftContractFactory = await hre.ethers.getContractFactory('BattleGear');
+  const nftContract = await nftContractFactory.deploy();
+  await nftContract.deployed();
+  console.log("Contract deployed to:", nftContract.address);
+
+  // Call the function.
+  let txn = await nftContract.claim(1)
+  // Wait for it to be mined.
+  await txn.wait()
+  console.log("Minted NFT #1")
+
+  txn = await nftContract.claim(2)
+  // Wait for it to be mined.
+  await txn.wait()
+  console.log("Minted NFT #2")
+
+  txn = await nftContract.claim(3)
+  // Wait for it to be mined.
+  await txn.wait()
+  console.log("Minted NFT #3")
+
+  txn = await nftContract.claim(4)
+  // Wait for it to be mined.
+  await txn.wait()
+  console.log("Minted NFT #4")
+};
+
+const runMain = async () => {
+  try {
+    await main();
+    process.exit(0);
+  } catch (error) {
+    console.log(error);
     process.exit(1);
-  });
+  }
+};
+
+runMain();

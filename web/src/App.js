@@ -10,7 +10,8 @@ import { networks } from './utils/networks';
 // Constants
 const TWITTER_HANDLE = 'dappcoder_';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const CONTRACT_ADDRESS = "0x713C1942Ac79D8D53458C76b01EbF73dc468451A";
+const CONTRACT_ADDRESS = "0xa3CC77D493744C5a5Ea03F89b46EB6cfF942d49c";
+const count = 1;
 
 const App = () => {
 	const [currentAccount, setCurrentAccount] = useState('');
@@ -119,6 +120,8 @@ useEffect(() => {
 
 const mintNFT = async () => {
 
+  const count = 1;
+
   try {
     const { ethereum } = window;
 
@@ -128,7 +131,8 @@ const mintNFT = async () => {
       const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, contractABI.abi, signer);
 
       console.log("Going to pop wallet now to pay gas...")
-      let nftTxn = await connectedContract.claim();
+      let nftTxn = await connectedContract.claim(count);
+      count +=1;
 
       console.log("Mining...please wait.")
       await nftTxn.wait();

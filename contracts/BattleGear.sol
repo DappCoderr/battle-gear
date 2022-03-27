@@ -20,7 +20,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 // import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+// import "@openzeppelin/contracts/utils/Counters.sol";
 
 
 
@@ -29,8 +29,8 @@ contract BattleGear is ERC721Enumerable, ReentrancyGuard, Ownable {
 
     constructor() ERC721("BattleGear", "BG") Ownable() {}
 
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+    // using Counters for Counters.Counter;
+    // Counters.Counter private _tokenIds;
 
     string[] private helmet = [
         "Null", 
@@ -197,17 +197,22 @@ contract BattleGear is ERC721Enumerable, ReentrancyGuard, Ownable {
         output = string(abi.encodePacked(output, parts[9], parts[10], parts[11], parts[12], parts[13], parts[14], parts[15], parts[16], parts[17], parts[18]));
         console.log(output);
         
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "Dev #', toString(tokenId), '", "description": "Developers around the world are tired of working and contributing their time and effort to enrich the top 1%. Join the movement that is community owned, building the future from the bottom up.", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '"}'))));
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "Gear #', toString(tokenId), '", "description": "Battle Gear is a battle game which holds different battel gear as an NFT to build one character. This project is build on polygon chain, Building For Ethernals", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '"}'))));
         output = string(abi.encodePacked('data:application/json;base64,', json));
 
         return output;
     }
 
-    function claim() public nonReentrant {
-        uint256 newItemId = _tokenIds.current();
-        require(newItemId > 0 && newItemId < 4444, "Token ID invalid");
-        _safeMint(msg.sender, newItemId);
-        _tokenIds.increment();
+    // function claim() public nonReentrant {
+    //     uint256 newItemId = _tokenIds.current();
+    //     require(newItemId > 0 && newItemId < 4444, "Token ID invalid");
+    //     _safeMint(msg.sender, newItemId);
+    //     _tokenIds.increment();
+    // }
+
+    function claim(uint256 tokenId) public nonReentrant {
+        require(tokenId > 0 && tokenId < 7778, "Token ID invalid");
+        _safeMint(_msgSender(), tokenId);
     }
     
     // function ownerClaim(uint256 tokenId) public nonReentrant onlyOwner {
